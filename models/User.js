@@ -1,6 +1,7 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
+import bcryptjs from 'bcryptjs'
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -12,8 +13,30 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+})
+
+// el pre es para hacer algo antes de que se guarde el user o lo el schema que estes usando, 
+//y en este caso lo que queremos es el evento del guardar, por lo que hay que poner "save"
+// la funcion tiene que ser function no puede ser una arrow function porque hace falta el scope del this
+userSchema.pre("save", async function(next){
+    const user = this
+
+    if(!user.isModified('password')) return next()
+
+    try {
+        const salt = await bcryptjs.genSalt(10)
+        user.password = await bcryptjs.hash(user.password, salt)
+        next()
+    } catch (error) {
+        console.log(error)
+        throw new Error("fallo el hash del password")
     }
 
 })
 
-export const User = model('user', userSchema)
+userSchema.methods.comparePassword = async function(candidatePassword){
+    return await bcryptjs.compare(candidatePassword, this.password)
+}
+
+export const User = mongoose.model('User', userSchema)
