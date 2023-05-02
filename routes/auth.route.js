@@ -1,7 +1,8 @@
 import express from "express";
-import { login, register } from "../controllers/auth.controller.js";
+import { infoUser, login, register, refreshToken, logout } from "../controllers/auth.controller.js";
 import {body} from 'express-validator'
 import { validationResultExpress } from "../middlewares/validationResultExpress.js";
+import { requiereToken } from "../middlewares/requireToken.js";
 const router = express.Router()
 
 router.post('/register', [
@@ -11,12 +12,15 @@ router.post('/register', [
 validationResultExpress,
 register)
 
-router.get('/login',[   
+router.post('/login',[   
     body('email', 'formato de email incorrecto').trim().isEmail().normalizeEmail(),
     ], 
     validationResultExpress,
     login
     )
 
+    router.get('/protected', requiereToken, infoUser )
+    router.get('/refresh', refreshToken)
+    router.get('/logout', logout)
 
 export default router;
