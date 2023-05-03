@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import { tokenVerificationErrors } from '../utils/tokenManager.js'
 
 export const requiereToken = (req, res, next) => {
 
@@ -14,7 +15,7 @@ try {
     next()
 
 } catch (error) {
-    return res.status(401).json({error: error.message})
+    return res.status(401).send({error: tokenVerificationErrors[error.message]})
 }
 
 } 

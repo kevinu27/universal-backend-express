@@ -73,12 +73,7 @@ export const infoUser = async (req, res) => {
 export const refreshToken = (req, res) => {
 
     try {
-        const refreshTokenCookie = req.cookies.refreshToken
-        console.log('refreshTokenCookie', refreshTokenCookie)
-        if(!refreshTokenCookie) throw new Error("No existe el token2")
-
-        const { uid } = jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH);
-        console.log("uid", uid)
+       
         const {token, expiresIn} = generateToken(uid)
 
         return  res.json( {token, expiresIn})
