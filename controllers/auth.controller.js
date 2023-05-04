@@ -16,7 +16,10 @@ export const register = async (req, res) => {
         
         await user.save() 
         // aqui va el jwt
-        return res.status(201).json({})
+        const {token, expiresIn} = generateToken(user.id)
+        generateRefreshToken(user.id, res)
+
+        return res.status(201).json({token, expiresIn} )
     }
     catch(error) {
         console.log(error.message) 

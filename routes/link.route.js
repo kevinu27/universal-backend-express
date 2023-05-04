@@ -1,8 +1,9 @@
 // aqui reemplazarlo por los routes de algun proyecto mio, esto es para seguir el tutorial
 
 import { Router } from "express";
-import { createLinks, getLinks } from "../controllers/link.controller.js";
+import { createLinks, getLink, getLinks } from "../controllers/link.controller.js";
 import { requiereToken } from "../middlewares/requireToken.js";
+import { bodyLinkValidator } from "../middlewares/validatorManager.js";
 const router = Router()
 
 //GET /api/v1/links all links
@@ -12,7 +13,8 @@ const router = Router()
 // DELETE /api/v1/links remove link
 
 router.get('/', requiereToken, getLinks)
-router.post('/', requiereToken, createLinks )
+router.get('/:id', requiereToken, getLink )
+router.post('/', requiereToken, bodyLinkValidator, createLinks )
 
 
 

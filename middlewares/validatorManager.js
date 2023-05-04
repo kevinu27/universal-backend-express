@@ -1,3 +1,4 @@
+import axios from "axios"
 import { validationResult, body } from "express-validator"
 
 export const validationResultExpress = (req, res, next) => {
@@ -9,9 +10,29 @@ export const validationResultExpress = (req, res, next) => {
 
     next()
 }
+export const bodyLinkValidator = [
+    body("longLink", "formato link incorrecto")
+    .trim()
+    .notEmpty()
+    // .custom(async (value) => { // esto seria para validar que sea una url valida
+    //     try {
+    //         if (!value.startsWith("https://")) {
+    //             value = "https://" + value;
+    //         }
+    //         await axios.get(value);
+    //         return value;
+    //     } catch (error) {
+    //         // console.log(error);
+    //         throw new Error("not found longlink 404");
+    //     }
+    // })
+    ,
+    validationResultExpress
+
+]
 
 export const bodyRegisterValidator = [
-    body('email', 'formato de email incorrecto')
+    body('email', 'formato de email incorrecto1')
     .trim()
     .isEmail()
     .normalizeEmail(), // esto es de express validar, le pasas que en el body va a recibir email, el mensaje que devuelve si falla y el isEmail que comprueba si es un email
@@ -24,7 +45,7 @@ export const bodyRegisterValidator = [
 
 
 export const bodyLoginValidator = [   
-    body('email', 'formato de email incorrecto').trim().isEmail().normalizeEmail(),
+    body('email', 'formato de email incorrecto2').trim().isEmail().normalizeEmail(),
     validationResultExpress
     ]
   

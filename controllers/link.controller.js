@@ -15,6 +15,22 @@ export const getLinks = async (req, res) => {
     }
 }
 
+export const getLink = async (req, res) => {
+
+        try{
+            const { id } = req.params
+            const link = await Link.findById(id)
+
+            return res.json({link})
+    
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({error: 'error servidor'})
+        }
+
+}
+
 export const createLinks = async (req, res) => {
     try{
        
@@ -25,7 +41,7 @@ export const createLinks = async (req, res) => {
 
         const newLink = await link.save()
 
-        return res.json({newLink})
+        return res.status(201).json({newLink})
 
     } catch (error) {
         console.log(error)
