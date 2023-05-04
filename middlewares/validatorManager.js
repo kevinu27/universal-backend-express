@@ -1,5 +1,5 @@
 import axios from "axios"
-import { validationResult, body } from "express-validator"
+import { validationResult, body, param } from "express-validator"
 
 export const validationResultExpress = (req, res, next) => {
     const errors = validationResult(req)
@@ -49,3 +49,11 @@ export const bodyLoginValidator = [
     validationResultExpress
     ]
   
+    export const paramLinkValidator = [
+        // ojo que no lo he probado que no pete
+        param("id", "Formato no válido (expressValidator)")
+            .trim()
+            .notEmpty()
+            .escape(), // este hace que no pille <script> que le puedan pasar por url
+        validationResultExpress,
+    ];
