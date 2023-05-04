@@ -12,7 +12,7 @@ const linkSchema = new Schema({
         required: true,
         trim: true,
     },
-    nanolink:{
+    nanoLink:{
         type: String,
         required: true,
         trim: true,

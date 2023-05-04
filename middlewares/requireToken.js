@@ -10,7 +10,6 @@ try {
     // console.log('token-----', token)
     token = token.split(" ")[1]
     const {uid} = jwt.verify(token, process.env.JWT_SECRET)
-    console.log('---------------!!!!', req.uid)
     req.uid = uid
     next()
 

@@ -1,5 +1,6 @@
 // aqui reemplazarlo por los controller de algun proyecto mio, esto es para seguir el tutorial
 
+import { nanoid } from "nanoid"
 import { Link } from "../models/Link.js"
 
 export const getLinks = async (req, res) => {
@@ -17,8 +18,14 @@ export const getLinks = async (req, res) => {
 export const createLinks = async (req, res) => {
     try{
        
-        const {longLinks} = await req.body
-        return res.json({longLinks})
+        const {longLink} = req.body
+        const linkData = {longLink, nanoLink: nanoid(8), uid: req.uid}
+        console.log('-----linkData-------', linkData)
+        const link = new Link(linkData)
+
+        const newLink = await link.save()
+
+        return res.json({newLink})
 
     } catch (error) {
         console.log(error)
