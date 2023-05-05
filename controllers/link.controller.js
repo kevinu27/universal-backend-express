@@ -96,7 +96,8 @@ export const updateLink = async (req, res) => {
         // // para que un usuario no pueda ver ningun link de otro usuarios
         // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
 
-        // await link.deleteOne()
+        link.longLink = longLink
+        await link.save()
 
         return res.json({link})
 
