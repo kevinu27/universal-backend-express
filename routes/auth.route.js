@@ -12,7 +12,7 @@ router.post('/register', bodyRegisterValidator, register)
 router.post('/login', bodyLoginValidator, login)
 
 router.get('/protected', requiereToken, infoUser )
-router.get('/refresh', requireRefreshtToken ,refreshToken)
+router.get('/refresh', requireRefreshtToken, refreshToken)
 router.get('/logout', logout)
 
 export default router;

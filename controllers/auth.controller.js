@@ -33,7 +33,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        
+        console.log("logeando")
         const { email, password } = req.body
 
         let user = await User.findOne({email})
@@ -46,14 +46,11 @@ export const login = async (req, res) => {
         }
         // Generate el token JWT
         const {token, expiresIn} = generateToken(user.id)
-        generateRefreshToken(user.id, res)
-        // res.cookie("token", token, {
-        //     httpOnly: true,
-        //     secure: !(process.env.MODO === "developer"),
+        const refresToken = generateRefreshToken(user.id, res)
+        console.log('res.cookie', refresToken)
 
-        // })
 
-        return  res.json( {token, expiresIn})
+        return  res.json( {token, expiresIn, refresToken})
 
     }  catch(error) {
         console.log(error)
@@ -74,15 +71,14 @@ export const infoUser = async (req, res) => {
 }
 
 export const refreshToken = (req, res) => {
-
+console.log('refreshtoken!!!!!!!!!!!!!!!!!!!!!!!!!')
     try {
-       
-        const {token, expiresIn} = generateToken(uid)
-
-        return  res.json( {token, expiresIn})
-        
+        console.log("req.uid------!!!!!!!", req.uid)
+        const { token, expiresIn } = generateToken(req.uid);
+        return res.json({ token, expiresIn });
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return res.status(500).json({ error: "error de server" });
     }
 
 }
