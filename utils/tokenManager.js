@@ -5,7 +5,7 @@ export const generateToken = (uid) => {
     const expiresIn = 60*15
     try {
         const token = jwt.sign({ uid }, process.env.JWT_SECRET, { expiresIn });
-        console.log("token en generateToken", token)
+        // console.log("token en generateToken", token)
         return { token, expiresIn };
     } catch (error) {
         console.log(error);
@@ -19,7 +19,7 @@ export const generateRefreshToken = (uid, res) => {
         const refreshToken = jwt.sign({ uid }, process.env.JWT_REFRESH, {
             expiresIn,
         });
-        console.log("refreshToken en generateToken", refreshToken)
+        // console.log("refreshToken en generateToken", refreshToken)
         // res.token = refreshToken
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,

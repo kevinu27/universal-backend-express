@@ -12,7 +12,7 @@ const router = Router()
 // PATCH/PUT /api/v1/links update link
 // DELETE /api/v1/links remove link
 
-router.get('/', requiereToken, getTasks)
+router.get('/', getTasks)
 router.get('/:id', requiereToken, getTask )
 router.post('/', requiereToken, createTask )
 router.delete('/:id', requiereToken, paramLinkValidator, removeTask )

@@ -4,11 +4,16 @@
 // import { bodyLinkValidator } from "../middlewares/validatorManager.js"
 import { Link } from "../models/Link.js"
 import { Task } from "../models/Task.js"
+import jwt from 'jsonwebtoken'
 
 export const getTasks = async (req, res) => {
-    console.log('req.uid--------........--------', req.uid)
+    console.log('req.uid--------........--------', req.headers.authorization)
+    let token = req.headers.authorization
+    token = token.split(" ")[1]
+    const {uid} = jwt.verify(token, process.env.JWT_SECRET)
+    console.log('uid despues de toda la historia', uid)
     try{
-       const tasks = await Task.find({uid: req.uid})
+       const tasks = await Task.find({uid: uid})
 
         return res.json({tasks})
 
