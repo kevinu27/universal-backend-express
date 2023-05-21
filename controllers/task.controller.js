@@ -73,16 +73,16 @@ export const removeTask = async (req, res) => {
 
     try{
         const { id } = req.params
-        const link = await Link.findById(id)
-        console.log('link----', link)
-
+        const task = await Task.findById(id)
+        console.log('task----', task)
+4
         // if(!link) return res.status(404).json({error: "error no existe el link "})
         // // para que un usuario no pueda ver ningun link de otro usuarios
         // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
 
-        await link.deleteOne()
+        await task.deleteOne()
 
-        return res.json({link})
+        return res.json({task})
 
 
     } catch (error) {

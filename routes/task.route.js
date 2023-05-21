@@ -15,7 +15,7 @@ const router = Router()
 router.get('/', getTasks)
 router.get('/:id', requiereToken, getTask )
 router.post('/', requiereToken, createTask )
-router.delete('/:id', requiereToken, paramLinkValidator, removeTask )
+router.delete('/:id', removeTask )
 router.patch('/:id', requiereToken, paramLinkValidator, bodyLinkValidator, updateTask)
 
 
