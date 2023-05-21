@@ -75,7 +75,8 @@ console.log('refreshtoken!!!!!!!!!!!!!!!!!!!!!!!!!')
     try {
         console.log("req.uid------!!!!!!!", req.uid)
         const { token, expiresIn } = generateToken(req.uid);
-        return res.json({ token, expiresIn });
+        const refresToken = generateRefreshToken(req.uid, res)
+        return res.json({ token, expiresIn, refresToken });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "error de server" });
@@ -84,7 +85,7 @@ console.log('refreshtoken!!!!!!!!!!!!!!!!!!!!!!!!!')
 }
 
 export const logout = (req, res) => { 
-
+    console.log('logout----------')
     res.clearCookie('refreshToken')
     res.json({ok: true})
 

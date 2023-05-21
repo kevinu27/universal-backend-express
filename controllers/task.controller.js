@@ -1,15 +1,16 @@
 // aqui reemplazarlo por los controller de algun proyecto mio, esto es para seguir el tutorial
 
-import { nanoid } from "nanoid"
-import { bodyLinkValidator } from "../middlewares/validatorManager.js"
+// import { nanoid } from "nanoid"
+// import { bodyLinkValidator } from "../middlewares/validatorManager.js"
 import { Link } from "../models/Link.js"
 import { Task } from "../models/Task.js"
 
 export const getTasks = async (req, res) => {
+    console.log('req.uid--------........--------', req.uid)
     try{
-       const links = await Link.find({uid: req.uid})
+       const tasks = await Task.find({uid: req.uid})
 
-        return res.json({links})
+        return res.json({tasks})
 
     } catch (error) {
         console.log(error)
@@ -47,6 +48,7 @@ export const createTask = async (req, res) => {
         const {deathline} = req.body
         const {priority} = req.body
         const {taskDescription} = req.body
+        console.log('-------------req.body-------------', req.body)
 
         const taskData = {taskName, deathline, priority, taskDescription, uid: req.uid}
         console.log('-----taskData-------', taskData)
@@ -57,7 +59,7 @@ export const createTask = async (req, res) => {
         return res.status(201).json({newTask})
 
     } catch (error) {
-        console.log(error)
+        console.log('--------ERROR---------', error)
         return res.status(500).json({error: 'error servidor'})
     }
 }
