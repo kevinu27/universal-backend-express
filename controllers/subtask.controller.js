@@ -4,18 +4,25 @@
 // import { bodyLinkValidator } from "../middlewares/validatorManager.js"
 import { Link } from "../models/Link.js"
 import { Task } from "../models/Task.js"
+import { Subtask } from "../models/Subtask.js"
 import jwt from 'jsonwebtoken'
+import mongoose from "mongoose"
 
-export const getTasks = async (req, res) => {
+export const getSubtasks = async (req, res) => {
     console.log('req.uid--------........--------', req.headers.authorization)
     let token = req.headers.authorization
     token = token.split(" ")[1]
     const {uid} = jwt.verify(token, process.env.JWT_SECRET)
     console.log('uid despues de toda la historia', uid)
-    try{
-       const tasks = await Task.find({uid: uid})
 
-        return res.json({tasks})
+    const taskIds  = req.headers.taskids.split(',')
+    
+    
+
+    try{
+       const subtasks = await Subtask.find({ tid: { $in: taskIds  } })
+
+        return res.json({subtasks})
 
     } catch (error) {
         console.log(error)
@@ -46,23 +53,22 @@ export const getTask = async (req, res) => {
 
 }
 
-export const createTask = async (req, res) => {
+export const createSubtask = async (req, res) => {
     try{
        
-        const {taskName} = req.body
-        const {deathline} = req.body
-        const {priority} = req.body
-        const {taskDescription} = req.body
-        const taskStatus = 0
+
+        const {subtaskDescription} = req.body
+        const {tid} = req.body
+        const subtaskStatus = 0
         console.log('-------------req.body-------------', req.body)
 
-        const taskData = {taskName, deathline, priority, taskDescription, taskStatus, uid: req.uid}
-        console.log('-----taskData-------', taskData)
-        const task = new Task(taskData)
+        const subtaskData = { subtaskDescription, subtaskStatus, tid}
+        console.log('-----taskData-------', subtaskData)
+        const subtask = new Subtask(subtaskData)
 
-        const newTask = await task.save()
+        const newSubtask = await subtask.save()
 
-        return res.status(201).json({newTask})
+        return res.status(201).json({newSubtask})
 
     } catch (error) {
         console.log('--------ERROR---------', error)

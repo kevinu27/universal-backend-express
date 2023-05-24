@@ -5,6 +5,7 @@ import cors from 'cors'
 import authRouter from './routes/auth.route.js'
 import linkRouter from './routes/link.route.js'
 import taskRouter from './routes/task.route.js'
+import subtaskRouter from './routes/subtask.route.js'
 import cookieParser from 'cookie-parser'
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(cookieParser())
 app.use('/api/v1/', authRouter)
 app.use("/api/v1/links", linkRouter)
 app.use("/api/v1/tasks", taskRouter)
+app.use("/api/v1/subtasks", subtaskRouter)
 
 const PORT = process.env.PORT || 5000
 
