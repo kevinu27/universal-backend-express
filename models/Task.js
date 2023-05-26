@@ -26,6 +26,10 @@ const taskSchema = new Schema({
     taskStatus:{
         type: Number,
         required: true,
+    },    
+    category:{
+        type: String,
+        required: true,
     },
     uid: {
         type: Schema.Types.ObjectId,

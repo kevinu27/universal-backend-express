@@ -76,20 +76,20 @@ export const createSubtask = async (req, res) => {
     }
 }
 
-export const removeTask = async (req, res) => {
+export const removeSubtask = async (req, res) => {
 
     try{
         const { id } = req.params
-        const task = await Task.findById(id)
-        console.log('task----', task)
+        const subtask = await Subtask.findById(id)
+        console.log('subtask----', subtask)
 4
         // if(!link) return res.status(404).json({error: "error no existe el link "})
         // // para que un usuario no pueda ver ningun link de otro usuarios
         // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
 
-        await task.deleteOne()
+        await subtask.deleteOne()
 
-        return res.json({task})
+        return res.json({subtask})
 
 
     } catch (error) {

@@ -53,10 +53,11 @@ export const createTask = async (req, res) => {
         const {deathline} = req.body
         const {priority} = req.body
         const {taskDescription} = req.body
+        const {category} = req.body
         const taskStatus = 0
         console.log('-------------req.body-------------', req.body)
 
-        const taskData = {taskName, deathline, priority, taskDescription, taskStatus, uid: req.uid}
+        const taskData = {taskName, deathline, priority, taskDescription, taskStatus, category, uid: req.uid}
         console.log('-----taskData-------', taskData)
         const task = new Task(taskData)
 

@@ -1,8 +1,8 @@
 // aqui reemplazarlo por los routes de algun proyecto mio, esto es para seguir el tutorial
 
 import { Router } from "express";
-import {  getTask, removeTask, updateTask } from "../controllers/task.controller.js";
-import { createSubtask, getSubtasks } from "../controllers/subtask.controller.js";
+import {  getTask, updateTask } from "../controllers/task.controller.js";
+import { createSubtask, getSubtasks, removeSubtask } from "../controllers/subtask.controller.js";
 import { requiereToken } from "../middlewares/requireToken.js";
 import { bodyLinkValidator, paramLinkValidator } from "../middlewares/validatorManager.js";
 const router = Router()
@@ -16,7 +16,7 @@ const router = Router()
 router.get('/', getSubtasks)
 router.get('/:id', requiereToken, getTask )
 router.post('/', requiereToken, createSubtask )
-router.delete('/:id', removeTask )
+router.delete('/:id', removeSubtask )
 router.patch('/:id', requiereToken, paramLinkValidator, bodyLinkValidator, updateTask)
 
 
