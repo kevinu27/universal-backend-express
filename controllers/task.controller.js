@@ -102,18 +102,31 @@ export const updateTask = async (req, res) => {
 
     try{
         const { id } = req.params
-        const { longLink} = req.body
-        const link = await Link.findById(id)
-        console.log('Link----', link)
+        const { taskName} = req.body
+        const { deathline} = req.body
+        const { priority} = req.body
+        const { taskDescription} = req.body
+        const { taskStatus} = req.body
+        const { category} = req.body
+
+        console.log('req.params', req.params)
+
+        console.log('id----', id)
+        const task = await Task.findById(id)
 
         // if(!link) return res.status(404).json({error: "error no existe el link "})
         // // para que un usuario no pueda ver ningun link de otro usuarios
         // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
 
-        link.longLink = longLink
-        await link.save()
+        task.taskName = taskName
+        task.deathline = deathline
+        task.priority = priority
+        task.taskDescription = taskDescription
+        task.taskStatus = taskStatus
+        task.category = category
+        await task.save()
 
-        return res.json({link})
+        return res.json({task})
 
 
     } catch (error) {

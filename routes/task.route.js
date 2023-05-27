@@ -3,7 +3,7 @@
 import { Router } from "express";
 import { createTask, getTask, getTasks, removeTask, updateTask } from "../controllers/task.controller.js";
 import { requiereToken } from "../middlewares/requireToken.js";
-import { bodyLinkValidator, paramLinkValidator } from "../middlewares/validatorManager.js";
+// import { bodyLinkValidator, paramLinkValidator } from "../middlewares/validatorManager.js";
 const router = Router()
 
 //GET /api/v1/links all links
@@ -16,7 +16,7 @@ router.get('/', getTasks)
 router.get('/:id', requiereToken, getTask )
 router.post('/', requiereToken, createTask )
 router.delete('/:id', removeTask )
-router.patch('/:id', requiereToken, paramLinkValidator, bodyLinkValidator, updateTask)
+router.patch('/:id', updateTask)
 
 
 
