@@ -103,30 +103,33 @@ export const removeSubtask = async (req, res) => {
 }
 
 
-export const updateTask = async (req, res) => {
+    export const updateSubtask = async (req, res) => {
 
-    try{
-        const { id } = req.params
-        const { longLink} = req.body
-        const link = await Link.findById(id)
-        console.log('Link----', link)
-
-        // if(!link) return res.status(404).json({error: "error no existe el link "})
-        // // para que un usuario no pueda ver ningun link de otro usuarios
-        // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
-
-        link.longLink = longLink
-        await link.save()
-
-        return res.json({link})
+        try{
+            const { id } = req.params
+            const { subtaskDescription} = req.body
+            const { subtaskStatus} = req.body
 
 
-    } catch (error) {
-        console.log(error)
-        if(error.kinf === "ObjectId" ){ // esto es un error de mongoose si no le mandas el formato del id correctamente
-            return res.status(403).json({error: 'formato id incorrecto'})
+            const subtask = await Subtask.findById(id)
+    
+            // if(!link) return res.status(404).json({error: "error no existe el link "})
+            // // para que un usuario no pueda ver ningun link de otro usuarios
+            // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
+            subtask.subtaskDescription = subtaskDescription
+            subtask.subtaskStatus = subtaskStatus
+    
+            await subtask.save()
+    
+            return res.json({subtask})
+    
+    
+        } catch (error) {
+            console.log(error)
+            if(error.kinf === "ObjectId" ){ // esto es un error de mongoose si no le mandas el formato del id correctamente
+                return res.status(403).json({error: 'formato id incorrecto'})
+            }
+            return res.status(500).json({error: 'error servidor'})
         }
-        return res.status(500).json({error: 'error servidor'})
+    
     }
-
-}

@@ -2,7 +2,7 @@
 
 import { Router } from "express";
 import {  getTask, updateTask } from "../controllers/task.controller.js";
-import { createSubtask, getSubtasks, removeSubtask } from "../controllers/subtask.controller.js";
+import { createSubtask, getSubtasks, removeSubtask, updateSubtask } from "../controllers/subtask.controller.js";
 import { requiereToken } from "../middlewares/requireToken.js";
 import { bodyLinkValidator, paramLinkValidator } from "../middlewares/validatorManager.js";
 const router = Router()
@@ -17,7 +17,7 @@ router.get('/', getSubtasks)
 router.get('/:id', requiereToken, getTask )
 router.post('/', requiereToken, createSubtask )
 router.delete('/:id', removeSubtask )
-router.patch('/:id', requiereToken, paramLinkValidator, bodyLinkValidator, updateTask)
+router.patch('/:id', updateSubtask)
 
 
 
