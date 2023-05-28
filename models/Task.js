@@ -27,6 +27,10 @@ const taskSchema = new Schema({
         type: Number,
         required: true,
     },    
+    taskcompleted:{
+        type: Boolean,
+        required: true,
+    }, 
     category:{
         type: String,
         required: true,

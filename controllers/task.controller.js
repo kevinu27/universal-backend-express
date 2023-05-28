@@ -55,9 +55,10 @@ export const createTask = async (req, res) => {
         const {taskDescription} = req.body
         const {category} = req.body
         const taskStatus = 0
+        const taskcompleted = false
         console.log('-------------req.body-------------', req.body)
 
-        const taskData = {taskName, deathline, priority, taskDescription, taskStatus, category, uid: req.uid}
+        const taskData = {taskName, deathline, priority, taskDescription, taskStatus, category, taskcompleted, uid: req.uid}
         console.log('-----taskData-------', taskData)
         const task = new Task(taskData)
 
@@ -108,6 +109,7 @@ export const updateTask = async (req, res) => {
         const { taskDescription} = req.body
         const { taskStatus} = req.body
         const { category} = req.body
+        const { taskcompleted} = req.body
 
         console.log('req.params', req.params)
 
@@ -117,13 +119,13 @@ export const updateTask = async (req, res) => {
         // if(!link) return res.status(404).json({error: "error no existe el link "})
         // // para que un usuario no pueda ver ningun link de otro usuarios
         // if(!link.uid.equals(req.uid))  return res.status(401).json({error: "este id no le pertenece "})
-
         task.taskName = taskName
         task.deathline = deathline
         task.priority = priority
         task.taskDescription = taskDescription
         task.taskStatus = taskStatus
         task.category = category
+        task.taskcompleted = taskcompleted
         await task.save()
 
         return res.json({task})
