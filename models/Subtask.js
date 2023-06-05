@@ -19,8 +19,9 @@ const subtaskSchema = new Schema({
         ref: "Task",
         required: true,
 
-    }
+    },
 
-})
+},
+{ timestamps: true })
 
 export const Subtask = model('subTask', subtaskSchema)
